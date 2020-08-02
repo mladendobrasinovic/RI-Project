@@ -1,3 +1,4 @@
 # Ne ukljucujemo instance
 instances/
 instances.tar.gz
+__pycache__
