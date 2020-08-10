@@ -1,22 +1,44 @@
 import os
 from bpso import BPSO
 from instance import Instance
+import sys
 
-
-if __name__ == "__main__":
+def test_kexu():
     
-    # Ucitavanje instanci.
-    inst_files = os.listdir('./instances')
-    inst_names = [fname[0:len(fname) - 6] for fname in inst_files]
-
-    # Testiranje klase instance.
+    inst_files = os.listdir('./frb30-15-msc')
     inst = Instance()
-    inst.load_delorme("./instances/" + inst_files[8])
+    inst.load_kexu("./frb30-15-msc/" + inst_files[0])
 
     algorithm = BPSO(inst)
     fit, pos = algorithm.run()
 
-    print(fit, pos)
-    # print(inst.monte_carlo(10000))
-    # print(inst_names)
-    # print(inst)
+    print(fit)
+    print(pos)
+
+def test_delorme():
+    
+    inst_files = os.listdir('./instances')
+    inst_names = [fname[0:len(fname) - 6] for fname in inst_files]
+
+    #Testiranje klase instance.
+    inst = Instance()
+    #inst.load_delorme("./instances/" + inst_files[8])
+    #20
+    inst.load_delorme("./instances/" + inst_files[22])
+
+    algorithm = BPSO(inst)
+    fit, pos = algorithm.run()
+
+    print(fit)
+    print(pos)
+
+if __name__ == "__main__":
+    
+    # Ucitavanje instanci.
+
+    if len(sys.argv) == 2 and sys.argv[1] == '-d':
+        test_delorme()
+    else:
+        test_kexu()
+    
+    # print(inst.monte_carlo(10000000))
