@@ -81,13 +81,13 @@ class ParticleIBPSO:
         self.neighbors = neighbors
 
     def rand_init(self):
-        """Vraca niz slucajnih istinitih vrednosti, potrebno za incijalizaciju pozicije cestica..."""
+        """Vraca niz slucajnih istinitih vrednosti, potrebno za incijalizaciju pozicije cestica."""
         
         # https://stackoverflow.com/questions/6824681/get-a-random-boolean-in-python#6824868
         return [rand_bit() and rand_bit() for t in range(self.dimensions)]
 
     def rand_bool(self):
-        """Vraca niz slucajnih istinitih vrednosti, za pomeranje racunanje brzina."""
+        """Vraca niz slucajnih istinitih vrednosti, za racunanje brzina."""
         
         # https://stackoverflow.com/questions/6824681/get-a-random-boolean-in-python#6824868
         return [rand_bit()  for t in range(self.dimensions)]
@@ -114,6 +114,8 @@ class BPSO:
         self.best_fit = 0
 
         self.init_topo_neumann()
+        # self.init_topo_ring()
+        # self.init_topo_gbest()
 
         for p in self.particles:
             self.update_best(p)
@@ -126,6 +128,13 @@ class BPSO:
         for i in range(self.NUM_PARTICLES):
             self.particles[i].init_neighbors([self.particles[(i-1) % self.NUM_PARTICLES],
                                               self.particles[(i+1) % self.NUM_PARTICLES]])
+
+            
+    def init_topo_gbest(self):
+        """Postavljanje susednosti u skladu sa gbest topologijom."""
+        
+        for i in range(self.NUM_PARTICLES):
+            self.particles[i].init_neighbors(self.particles)
 
     def init_topo_neumann(self):
         """Postavljanje susednosti u skladu sa Von Nojmanovom topologijom."""
@@ -141,8 +150,8 @@ class BPSO:
 
             tmp = []
             
-            tmp.append(self.particles[i*16 + clamp(j+1)])
-            tmp.append(self.particles[i*16 + clamp(j-1)])
+            tmp.append(self.particles[i*length + clamp(j+1)])
+            tmp.append(self.particles[i*length + clamp(j-1)])
             tmp.append(self.particles[clamp(i-1)*length + j])
             tmp.append(self.particles[clamp(i+1)*length + j])
 
