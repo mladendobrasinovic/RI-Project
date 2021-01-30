@@ -3,7 +3,7 @@ import random
 import math
 
 # NUM_PARTICLES = 484 - Ovo izracunavamo na osnovu velicine problema.
-NUM_ITERATIONS = 1000
+NUM_ITERATIONS = 700
 
 def rand_bit():
     return bool(random.getrandbits(1))
@@ -46,7 +46,7 @@ class ParticleIBPSO:
         omega2 = self.rand_bool()
 
         social_diff = [t[0] != t[1] for t in zip(social_pos, self.pos)]
-        social = [t[0] & t[1] for t in zip(omega1, social_diff)]
+        social = [t[0] and t[1] for t in zip(omega1, social_diff)]
 
         cog_diff = [t[0] != t[1] for t in zip(cog_pos, self.pos)]
         cog = [t[0] and t[1] for t in zip(omega2, cog_diff)]

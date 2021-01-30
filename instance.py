@@ -65,7 +65,24 @@ class Instance:
                 
             self.sets.append(c_set)                
         
+    def write_delorme(self, filename):
+        """Zapisuje instancu u odredjeni fajl u direktorijumu za ovakve instance. delorme format."""
+        
+        with open("generated/" + filename, 'w') as file:
 
+            # Ne postujemo delove formata koje ne koristimo u ucitavanju.
+            file.write("{} {}\n".format(self.n_sets, self.n_vars))
+            file.write("\n")
+            
+            for cur_set in self.sets:
+                file.write("\n")
+                for i in range(len(cur_set) - 1):
+                    file.write(str(cur_set[i]))
+                    file.write(" ")
+                file.write(str(cur_set[-1]))
+                file.write("\n")            
+            
+            
     def fitness(self, candidate):
         """Racuna pogodnost tako da su neprihvatljive cestice kaznjavane za broj preklapanja."""
         

@@ -1,5 +1,2 @@
-# Ne ukljucujemo instance
-instances/
 *.tar.gz
-frb*
 __pycache__
